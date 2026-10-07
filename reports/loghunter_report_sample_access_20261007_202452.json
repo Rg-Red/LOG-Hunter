@@ -1,0 +1,189 @@
+{
+  "log_file": "sample_access.log",
+  "timestamp": "2026-10-07T20:24:52.392420",
+  "summary": {
+    "total_entries": 30,
+    "unique_ips": 13,
+    "parse_errors": 0,
+    "duration": 0.041489,
+    "severity_counts": {
+      "CRITICAL": 3,
+      "HIGH": 4,
+      "MEDIUM": 7,
+      "LOW": 0,
+      "INFO": 0
+    },
+    "top_attackers": [
+      [
+        "10.0.0.50",
+        5
+      ],
+      [
+        "198.50.200.10",
+        5
+      ],
+      [
+        "10.0.0.51",
+        2
+      ],
+      [
+        "192.168.1.104",
+        1
+      ],
+      [
+        "45.33.32.156",
+        1
+      ]
+    ],
+    "top_paths": [
+      [
+        "/wp-login.php",
+        12
+      ],
+      [
+        "/",
+        1
+      ],
+      [
+        "/products?id=123",
+        1
+      ],
+      [
+        "/sitemap.xml",
+        1
+      ],
+      [
+        "/search?q=selecting+a+product",
+        1
+      ]
+    ]
+  },
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "type": "Path Traversal / LFI",
+      "ip": "10.0.0.50",
+      "timestamp": "2024-09-01T10:20:30+00:00",
+      "request": "GET /files?path=../../../../etc/passwd HTTP/1.1",
+      "rule_id": "lfi_sensitive_file",
+      "description": "Traversal aimed at a sensitive system file"
+    },
+    {
+      "severity": "CRITICAL",
+      "type": "Web Shell Probe",
+      "ip": "10.0.0.51",
+      "timestamp": "2024-09-01T10:21:30+00:00",
+      "request": "GET /shell.php HTTP/1.1",
+      "rule_id": "webshell_known",
+      "description": "Request for a well-known public web shell"
+    },
+    {
+      "severity": "CRITICAL",
+      "type": "Web Shell Probe",
+      "ip": "10.0.0.51",
+      "timestamp": "2024-09-01T10:21:35+00:00",
+      "request": "GET /c99.php HTTP/1.1",
+      "rule_id": "webshell_known",
+      "description": "Request for a well-known public web shell"
+    },
+    {
+      "severity": "HIGH",
+      "type": "XSS",
+      "ip": "10.0.0.50",
+      "timestamp": "2024-09-01T10:20:15+00:00",
+      "request": "GET /api/data?q=%3Cscript%3Ealert(1)%3C/script%3E HTTP/1.1",
+      "rule_id": "xss_script_tag",
+      "description": "Injected script / markup tag in request"
+    },
+    {
+      "severity": "HIGH",
+      "type": "Path Traversal / LFI",
+      "ip": "10.0.0.50",
+      "timestamp": "2024-09-01T10:20:30+00:00",
+      "request": "GET /files?path=../../../../etc/passwd HTTP/1.1",
+      "rule_id": "lfi_traversal",
+      "description": "Directory traversal sequence"
+    },
+    {
+      "severity": "HIGH",
+      "type": "Path Traversal / LFI",
+      "ip": "192.168.1.104",
+      "timestamp": "2024-09-01T10:21:00+00:00",
+      "request": "GET /page.php?file=php://filter/convert.base64-encode/resource=index HTTP/1.1",
+      "rule_id": "lfi_wrapper",
+      "description": "PHP stream-wrapper abuse (filter/input/data)"
+    },
+    {
+      "severity": "HIGH",
+      "type": "Brute Force",
+      "ip": "45.33.32.156",
+      "timestamp": "2024-09-01T10:22:50+00:00",
+      "request": "10 failed login attempts in 300s",
+      "rule_id": "brute_force",
+      "description": "Brute-force burst: 10 failures from 45.33.32.156"
+    },
+    {
+      "severity": "MEDIUM",
+      "type": "Scanner Probe",
+      "ip": "10.0.0.50",
+      "timestamp": "2024-09-01T10:20:00+00:00",
+      "request": "GET /api/users?id=1' OR '1'='1 HTTP/1.1",
+      "rule_id": "scanner_ua",
+      "description": "Scanner user-agent detected: Scripted client"
+    },
+    {
+      "severity": "MEDIUM",
+      "type": "Scanner Probe",
+      "ip": "10.0.0.50",
+      "timestamp": "2024-09-01T10:20:30+00:00",
+      "request": "GET /files?path=../../../../etc/passwd HTTP/1.1",
+      "rule_id": "scanner_ua",
+      "description": "Scanner user-agent detected: Scripted client"
+    },
+    {
+      "severity": "MEDIUM",
+      "type": "Scanner Probe",
+      "ip": "198.50.200.10",
+      "timestamp": "2024-09-01T10:23:00+00:00",
+      "request": "GET /.git/config HTTP/1.1",
+      "rule_id": "scanner_paths",
+      "description": "Exposed administrative / configuration path probe"
+    },
+    {
+      "severity": "MEDIUM",
+      "type": "Scanner Probe",
+      "ip": "198.50.200.10",
+      "timestamp": "2024-09-01T10:23:00+00:00",
+      "request": "GET /.git/config HTTP/1.1",
+      "rule_id": "scanner_ua",
+      "description": "Scanner user-agent detected: sqlmap"
+    },
+    {
+      "severity": "MEDIUM",
+      "type": "Scanner Probe",
+      "ip": "198.50.200.10",
+      "timestamp": "2024-09-01T10:23:05+00:00",
+      "request": "GET /.env HTTP/1.1",
+      "rule_id": "scanner_paths",
+      "description": "Exposed administrative / configuration path probe"
+    },
+    {
+      "severity": "MEDIUM",
+      "type": "Scanner Probe",
+      "ip": "198.50.200.10",
+      "timestamp": "2024-09-01T10:23:05+00:00",
+      "request": "GET /.env HTTP/1.1",
+      "rule_id": "scanner_ua",
+      "description": "Scanner user-agent detected: sqlmap"
+    },
+    {
+      "severity": "MEDIUM",
+      "type": "Scanner Probe",
+      "ip": "198.50.200.10",
+      "timestamp": "2024-09-01T10:23:10+00:00",
+      "request": "GET /admin HTTP/1.1",
+      "rule_id": "scanner_ua",
+      "description": "Scanner user-agent detected: sqlmap"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+﻿# Git commands to publish LOG-Hunter
+
+# 1. Initialize git repo
+cd C:\Users\paytakht\Documents\LOG-Hunter
+git init
+
+# 2. Configure credential helper (stores credentials after first use)
+git config --global credential.helper store
+
+# 3. Stage all files
+git add signatures.py log_hunter.py sample_access.log requirements.txt README.md
+git add reports/.gitkeep 2>  # Add placeholder if you want to track the reports folder
+
+# 4. Create .gitignore to exclude reports
+echo 'reports/*.json' > .gitignore
+echo '__pycache__/' >> .gitignore
+echo '*.pyc' >> .gitignore
+git add .gitignore
+
+# 5. First commit
+git commit -m 'Initial commit: LOG-Hunter v1.0.0 - SOC log triage tool'
+
+# 6. Create repo on GitHub (replace YOUR_USERNAME with your actual GitHub username)
+#    Go to: https://github.com/new
+#    Repository name: LOG-Hunter
+#    Description: Web server log attack analyzer for SOC-style log triage
+#    Public or Private: your choice
+#    Do NOT initialize with README (we already have one)
+
+# 7. Add remote (replace YOUR_USERNAME)
+git remote add origin https://github.com/YOUR_USERNAME/LOG-Hunter.git
+
+# 8. Push to GitHub
+git branch -M main
+git push -u origin main
+
+# After first push, Git will prompt for username and password/token.
+# The credential.helper will store them for future pushes.
